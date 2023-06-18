@@ -14,7 +14,7 @@ from pdb import set_trace
 INPUT_DATA = "./Data/OneRowData"
 TRUTH_DATA = "./Data/ConvertData"
 
-input_files = glob.glob(f"{INPUT_DATA}/*11_onerow.txt")
+input_files = glob.glob(f"{INPUT_DATA}/*1_onerow.txt")
 print(input_files)
 
 input_data = []
@@ -96,9 +96,9 @@ input_size = 10
 hidden_size = 50
 output_size = 94
 
-num_epochs = 1
-batch_size = 1
-learning_rate = 0.01
+num_epochs = 5 # エポック数定義
+batch_size = 1 # バッチサイズ定義
+learning_rate = 0.01 # 学習率
 
 
 # データセットとデータローダーの作成
@@ -188,7 +188,7 @@ for dset in test_data:
 
     output_sentence_list = []
     gt_sentence_list = []
-    for (x_data, t_data) in zip(test, gt):
+    for (x_data, g_data) in zip(test, gt):
         x = torch.cat(x_data, dim=0).reshape(len(x_data), -1)
         # モデルに入力
         output = model(x.float())
@@ -197,13 +197,16 @@ for dset in test_data:
         # 予測した英語を出力する処理　と　答えの英語を出力する処理
         output_word = ""
         gt_word = ""
-        for p, t in zip(predicted.numpy(), t_data.numpy()):
-            output_word += chr(p+33)
-            gt_word += chr(t)
+        for p, g in zip(predicted.numpy(), g_data.numpy()):
+            p_pred = chr(p+33) # 予測文字
+            g_pred = chr(g) # 答えの文字
+
+            output_word += p_pred
+            gt_word += g_pred
 
             # CERの計算
             c_sum += 1
-            if(output_word == gt_word):
+            if(p_pred == g_pred):
                 c_ans_sum += 1
 
         output_sentence_list.append(output_word)
@@ -213,7 +216,7 @@ for dset in test_data:
         w_sum += 1
         # 単語単位で一致しているかを判定
         if(output_word == gt_word):
-            w_ans_sum = 1
+            w_ans_sum += 1
         
     
     # 予測の処理を出力
@@ -228,8 +231,10 @@ for dset in test_data:
 print(" ")
 print("## CER(文字誤り率) ##")
 print("正解率:", round((c_ans_sum/c_sum)*100, 3), "%")
+print("CER:", round(100-(c_ans_sum/c_sum)*100, 3), "%")
 print("文字総数:", c_sum, "正解数", c_ans_sum)
 print(" ")
 print("## WER(単語誤り率) ##")
 print("正解率:", round((w_ans_sum/w_sum)*100, 3), "%")
+print("WER:", round(100-(w_ans_sum/w_sum)*100, 3), "%")
 print("単語総数:", w_sum, "正解数", w_ans_sum)
