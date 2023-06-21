@@ -24,18 +24,18 @@ for file in files:
         onerow_sent = ""
 
         for c in sentence:
-            asnii_c = ord(c) 
+            ascii_c = ord(c) 
 
-            if asnii_c < 32: # LF
+            if ascii_c < 32: # LF
                 continue
-            elif asnii_c == 32: # SPC
+            elif ascii_c == 32: # SPC
                 sentence_sent += " "
                 onerow_sent += " "
             else:
                 sentence_sent += c
 
-                asnii_c %= 10
-                onerow_sent += str(asnii_c)
+                ascii_c %= 10
+                onerow_sent += str(ascii_c)
 
         sentence_sent = re.sub(r"\s+", " ", sentence_sent)
         onerow_sent = re.sub(r"\s+", " ", onerow_sent)

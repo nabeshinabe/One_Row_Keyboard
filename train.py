@@ -4,10 +4,25 @@ import random
 import torch
 import torch.nn as nn
 import glob
+from pathlib import Path
 from torch.utils.data import DataLoader, TensorDataset
+# from torch.utils.tensorboard import SummaryWriter
 
 from pdb import set_trace
 
+##### GPU・モデル保存設定 #####
+torch.manual_seed(24)  # 最初を揃えるために書いてます．なくてもok
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+model_path = Path("./models/model.pt")
+PATH = Path("./models/checkpoint.pt")
+
+# writer_path = "./logs/logs"
+# writer = SummaryWriter(log_dir=writer_path)
+
+print("GPU:", torch.cuda.is_available())
+
+print("Let's use", torch.cuda.device_count(), "GPUs!")
 
 ##### データ処理 #####
 # Fileの読み込み
@@ -132,6 +147,7 @@ class Model(nn.Module):
         self.fc2 = nn.Linear(hidden_size, hidden_size)  # 入力層から隠れ層への線形変換
         self.relu2 = nn.ReLU()                          # ReLU活性化関数
         self.fc3 = nn.Linear(hidden_size, output_size) # 隠れ層から出力層への線形変換
+        self.out = nn.Softmax(dim=0) #Softmaxで活性化
 
     def forward(self, x):
         x = self.fc1(x)     # 入力を隠れ層に渡す
@@ -139,9 +155,10 @@ class Model(nn.Module):
         x = self.fc2(x)     # 隠れ層の出力を隠れ層に渡す
         x = self.relu2(x)     # 隠れ層の出力を活性化関数に渡す
         x = self.fc3(x)     # 隠れ層の出力を出力層に渡す
+        x = self.out(x)
         return x
 
-model = Model()
+model = Model().to(device)
 
 # 損失関数と最適化手法の定義
 criterion = nn.BCEWithLogitsLoss()

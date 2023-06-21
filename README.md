@@ -16,7 +16,7 @@ PyTorchを用いた深層学習により、元の文章を予測する問題と�
 出力: BAHIA COCOA REVIEW Showers
 
 ## 使用データ
-nltkにおけるデータセット。
+nltkに収録されているReuters Corpusのうち200データを使用。
 なおデータの作成の仕方は、Ground Truthのデータの各文字をASCII文字にした時の下1桁の数字に置き換えていっている。
 ### ./data/RowData
 処理前の元々のデータ。ここからタブ文字や改行文字の削除等を行ったデータが./data/ConvertDataである。
