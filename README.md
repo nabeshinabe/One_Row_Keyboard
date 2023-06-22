@@ -25,3 +25,13 @@ Ground Truthとなるデータ。これがこの問題の出力にあたる。
 ### ./data/OneRowData
 ./data/ConvertDataの各文書を数字+spaceのみに変換させたデータ。これがこの問題の入力にあたる。
 
+## 学習
+### train.py　+ Model.py
+基本的なDNNを用いたコードで学習
+
+### train_gpu.py
+GPUを用いてDNNを用いて学習可能。
+上記のtrain.pyと使用しているネットワークも異なる。
+
+問題自体が極めて難しいので、このコードでは精度は高くない。
+

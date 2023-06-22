@@ -24,9 +24,10 @@ for file in files:
         onerow_sent = ""
 
         for c in sentence:
+            c = c.lower()
             ascii_c = ord(c) 
 
-            if ascii_c < 32: # LF
+            if ascii_c < 32 or ascii_c == 127: # LF
                 continue
             elif ascii_c == 32: # SPC
                 sentence_sent += " "
