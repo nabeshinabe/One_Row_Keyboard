@@ -11,13 +11,14 @@ PyTorchを用いた深層学習により、元の文章を予測する問題と�
 対応する文章
 
 ### 例
-入力: 65235 79795 296397 3419145
+入力: 87457 91917 418519 5419145 910650710 6441734176 641 9117 50 641 87457 91917 21014
 
-出力: BAHIA COCOA REVIEW Showers
+出力: bahia cocoa review showers continued throughout the week in the bahia cocoa zone,
 
 ## 使用データ
 nltkに収録されているReuters Corpusのうち200データを使用。
 なおデータの作成の仕方は、Ground Truthのデータの各文字をASCII文字にした時の下1桁の数字に置き換えていっている。
+また、大文字は全て小文字に変換してデータセットを作成した。
 ### ./data/RowData
 処理前の元々のデータ。ここからタブ文字や改行文字の削除等を行ったデータが./data/ConvertDataである。
 ### ./data/ConvertData
@@ -32,6 +33,10 @@ Ground Truthとなるデータ。これがこの問題の出力にあたる。
 ### train_gpu.py
 GPUを用いてDNNを用いて学習可能。
 上記のtrain.pyと使用しているネットワークも異なる。
+
+### OneRowKeyboard.ipynb
+.ipynbバージョンの実行ファイル。
+train_gpu.pyとネットワークは同じ(ファイルの参照の仕方は異なる。)
 
 問題自体が極めて難しいので、このコードでは精度は高くない。
 
