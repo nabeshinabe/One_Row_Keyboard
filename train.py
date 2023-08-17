@@ -6,7 +6,7 @@ import torch.nn as nn
 import glob
 from pathlib import Path
 from torch.utils.data import DataLoader, TensorDataset
-# from torch.utils.tensorboard import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 
 import Model
 
