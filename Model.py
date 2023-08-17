@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 
 input_size = 10
